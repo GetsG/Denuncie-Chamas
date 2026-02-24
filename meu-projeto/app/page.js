@@ -41,7 +41,7 @@ export default function Home() {
                   {...register('email', { required: "Email obrigatório"})}/> 
                 </div>
                 
-                {errors.email && <p>{errors.email.message}</p>}
+                {errors.email && <p className={styles.errors}>{errors.email.message}</p>}
             </div>
           {/* ------------------------------------ */}
             
@@ -55,7 +55,7 @@ export default function Home() {
                 {...register('password', { required: "Senha obrigatória", minLength:{value: 8, message: "Mínimo 8 caracteres"} })}/>
               </div>
                       
-                {errors.password && <p>{errors.password?.message}</p>}
+                {errors.password && <p className={styles.errors}>{errors.password?.message}</p>}
             </div>
         {/* ------------------------------------ */}
 
