@@ -11,5 +11,5 @@ Sistema de registro de ocorrências de incêndio.
 
 ## Como rodar
 
-npm install
-npm run dev
+- npm install
+- npm run dev
