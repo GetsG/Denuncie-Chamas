@@ -5,6 +5,7 @@ import styles from './page.module.css'
 import Logo from '../public/logo.png';
 import { Lock } from "@deemlol/next-icons";
 import { Mail } from "@deemlol/next-icons"
+import Link from "next/link";
 
 export default function Home() {
 
@@ -22,7 +23,7 @@ export default function Home() {
 
         {/* Logo, Titulo e Subtitulo */}
         <div className={styles.cardTitle}>
-          <Image className={styles.logo} src={Logo}/>
+          <Image className={styles.logo} src={Logo} alt='Logo'/>
           <h1 className={styles.title}>Denuncie Chamas</h1>
           <p className={styles.subTitle}>Entre com sua conta para registrar denúncias de incêndios</p>
         </div>
@@ -67,7 +68,7 @@ export default function Home() {
         </form>
 
         {/* Registrar */}
-        <p className={styles.register}>Não tem uma conta? <span> Cadastre-se </span></p>
+        <p className={styles.register}>Não tem uma conta? <Link className={styles.registerLink} href="/registrar"> Cadastre-se </Link></p>
         {/* ------------------------------------ */}
 
       </div>

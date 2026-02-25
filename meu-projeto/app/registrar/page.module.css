@@ -99,15 +99,15 @@
 }
 
 /* ====================
-   CAMPO PARA REGISTRAR
+   CAMPO PARA LOGAR
 ==================== */
 
-.register{
+.logar{
     text-align: center;
     font-size: 13px;
 }
 
-.registerLink{
+.logarLink{
     color: #f97316;
     font-weight: bold;
     text-decoration: none;
