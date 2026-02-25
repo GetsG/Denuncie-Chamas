@@ -5,6 +5,8 @@ import styles from './page.module.css'
 import Logo from '../../public/logo.png';
 import { Lock } from "@deemlol/next-icons";
 import { Mail } from "@deemlol/next-icons"
+import { User } from "@deemlol/next-icons"
+import { Phone } from "@deemlol/next-icons";
 import Link from "next/link";
 
 export default function Home() {
@@ -40,7 +42,7 @@ export default function Home() {
                 <label>Nome Completo</label>
 
                 <div className={styles.inputWrapper}>
-                  <span className={styles.icon}><Mail size={20}/></span>
+                  <span className={styles.icon}><User size={20}/></span>
                   <input className={styles.input} type="text" placeholder="Seu nome completo"
                   {...register('nome', { required: "Nome obrigatório"})}/> 
                 </div>
@@ -68,7 +70,7 @@ export default function Home() {
                 <label>Telefone</label>
 
                 <div className={styles.inputWrapper}>
-                  <span className={styles.icon}><Mail size={20}/></span>
+                  <span className={styles.icon}><Phone size={20}/></span>
                   <input className={styles.input} type="number" placeholder="(00) 0000-0000"
                   {...register('telefone', { required: "Telefone obrigatório"})}/> 
                 </div>
