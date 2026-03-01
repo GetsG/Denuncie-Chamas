@@ -11,6 +11,7 @@
     padding: 20px; 
     border-radius: 20px;
     width: 50vh;
+    margin: 20px;
 }
 
 /* ====================
@@ -120,4 +121,57 @@
 .errors{
     color: #c50808;
     font-size: 12px;
+}
+
+.errorCadastro{
+    color: #c50808;
+    font-size: 15px;
+    text-align: center;
+    margin: 20px;
+}
+
+/* ====================
+   SUCESSO CADASTRO
+==================== */
+
+/* Banner fixo no topo */
+.successBanner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  color: white;
+
+  padding: 16px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 🔥 centraliza */
+
+  font-weight: 500;
+  font-size: 14px;
+
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  animation: slideDown 0.3s ease forwards;
+}
+
+/* botão fica absoluto no canto direito */
+.closeButton {
+  position: absolute;
+  right: 20px;
+
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.closeButton:hover {
+  opacity: 0.7;
 }

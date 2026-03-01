@@ -8,18 +8,61 @@ import { Mail } from "@deemlol/next-icons"
 import { User } from "@deemlol/next-icons"
 import { Phone } from "@deemlol/next-icons";
 import Link from "next/link";
+import { cadastro } from '../services/registerService';
+import { useState } from "react"
+import LoadingOverlay from "../components/LoadingOverlay"
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 
   const {register, handleSubmit, watch, formState: {errors}} = useForm()
+  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
+  const [successMessage, setSuccessMessage] = useState("");
 
-  {/* Retorno do formulário, email e senha */}
-  const onSubmit = (data) => {
-    console.log('data', data)
+  const router = useRouter();
+
+  {/* Retorno do formulário */}
+  const onSubmit = async (data) => {
+    if (loading) return;
+  
+    try {
+      setLoading(true);
+      setErrorMessage("");
+      setSuccessMessage("");
+  
+      const payload = {
+        nome: data.nome,
+        telefone: String(data.telefone),
+        login: data.email,
+        password: data.password,
+  }
+  
+      const result = await cadastro(payload)
+      setSuccessMessage("Email cadastrado com sucesso!");
+  
+      setTimeout(() => {
+      router.push("/");
+    }, 1500);
+  
+    } 
+    catch (error) {
+      
+      if (error.status === 409){
+        setErrorMessage("Email já cadastrado")
+      } else {
+        setErrorMessage(error.message || "Erro ao cadastrar");
+  }
+      
+  
+    } finally{
+      setLoading(false)
+    }
   }
 
   // pega o valor atual do campo password (senha)
   const passwordValue = watch("password");
+
 
   return (
     <div className={styles.container}>
@@ -34,8 +77,28 @@ export default function Home() {
         </div>
         {/* ------------------------------------ */}
 
+
+      {/* Erro de cadastro*/}
+        {errorMessage && 
+        (<p className={styles.errorCadastro}>
+        {errorMessage}
+        </p>
+)}
+
+      {successMessage && (
+      <div className={styles.successBanner}>
+        <span>{successMessage}</span>
+        <button className={styles.closeButton} onClick={() => setSuccessMessage("")}>
+          ✕
+        </button>
+      </div>
+)}
+
+
+
         {/* Formulário Cadastro*/}
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+
 
             {/*Nome Completo*/}
             <div>
@@ -71,7 +134,7 @@ export default function Home() {
 
                 <div className={styles.inputWrapper}>
                   <span className={styles.icon}><Phone size={20}/></span>
-                  <input className={styles.input} type="number" placeholder="(00) 0000-0000"
+                  <input className={styles.input} type="tel" placeholder="(00) 0000-0000"
                   {...register('telefone', { required: "Telefone obrigatório"})}/> 
                 </div>
                 
@@ -119,6 +182,11 @@ export default function Home() {
         {/* LOGAR */}
         <p className={styles.logar}>Já tem uma conta? <Link className={styles.logarLink} href="/"> Faça login </Link></p>
         {/* ------------------------------------ */}
+
+        {/* Registrar */}
+        <>
+          <LoadingOverlay show={loading} text="Entrando..." />
+        </>
 
       </div>
 

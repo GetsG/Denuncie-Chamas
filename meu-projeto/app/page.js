@@ -6,15 +6,44 @@ import Logo from '../public/logo.png';
 import { Lock } from "@deemlol/next-icons";
 import { Mail } from "@deemlol/next-icons"
 import Link from "next/link";
+import { useRouter } from "next/navigation"
+import { login } from './services/loginService';
+import { useState } from "react"
+import LoadingOverlay from "./components/LoadingOverlay"
 
 export default function Home() {
 
   const {register, handleSubmit, formState: {errors}} = useForm()
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [erro, setErro] = useState(false)
 
   {/* Retorno do formulário, email e senha */}
-  const onSubmit = (data) => {
-    console.log('data', data)
+  const onSubmit = async (data) => {
+    if (loading) return;
+
+  try {
+    setLoading(true)
+    setErro(false)
+
+    const payload = {
+      login: data.email,
+      password: data.password,
+}
+
+    const result = await login(payload)
+    localStorage.setItem("token", result.token)
+    router.push("/dashboard")
+
+  } 
+  catch (error) {
+    console.error(error.message)
+    setErro(true)
+
+  } finally{
+    setLoading(false)
   }
+}
 
   return (
     <div className={styles.container}>
@@ -60,9 +89,13 @@ export default function Home() {
             </div>
         {/* ------------------------------------ */}
 
+        {/* Erro Email ou Senha */}
+        <p className={styles.erroLogar}>{erro ? "E-mail ou senha incorretos." : ""}</p>
+        {/* ------------------------------------ */}
+
         {/* Botão Entrar */}
             <button type="submit">
-                Entrar
+                {loading ? "Entrando..." : "Entrar"}
             </button>
         {/* ------------------------------------ */}
         </form>
@@ -72,6 +105,11 @@ export default function Home() {
         {/* ------------------------------------ */}
 
       </div>
+
+      {/* Registrar */}
+      <>
+        <LoadingOverlay show={loading} text="Entrando..." />
+      </>
 
     </div>
   );

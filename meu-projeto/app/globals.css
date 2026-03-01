@@ -7,11 +7,3 @@
   font-family: 'Inter', sans-serif;
 }
 
-body{
-        background: linear-gradient(
-  to right,
-  #fff7ed,   /* orange-50 */
-  #fef2f2,   /* red-50 */
-  #fefce8    /* yellow-50 */
-);
-}

@@ -11,6 +11,7 @@
     padding: 20px; 
     border-radius: 20px;
     width: 50vh;
+    margin: 20px;
 }
 
 /* ====================
@@ -120,4 +121,10 @@
 .errors{
     color: #c50808;
     font-size: 12px;
+}
+
+.erroLogar{
+    color: #c50808;
+    font-size: 15px;
+    text-align: center;
 }
