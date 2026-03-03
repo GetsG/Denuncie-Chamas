@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LogOut } from "@deemlol/next-icons";
+import { jwtDecode } from "jwt-decode";
 
 export default function Header() {
 
@@ -15,8 +16,8 @@ export default function Header() {
         const token = localStorage.getItem("token");
 
         if (token) {
-            const payload = JSON.parse(atob(token.split(".")[1]));
-            setNome(payload.nome);
+            const decoded = jwtDecode(token)
+            setNome(decoded.nome);
         }
     }, []);
 
