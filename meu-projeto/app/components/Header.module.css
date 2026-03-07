@@ -6,10 +6,28 @@
     background-color: white;
 }
 
+/* ====================
+    LOGO, TITULO E SUBTITULO A ESQUERDA
+==================== */
+
+.left{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* ====================
+    LOGO
+==================== */
+
 .logo{
     width: 80px;
     height: 80px;
 }
+
+/* ====================
+    TITULO
+==================== */
 
 .title{
     display: flex;
@@ -18,11 +36,6 @@
     align-self: center;
 }
 
-.left{
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
 
 .title h1{
     font-size: 22px;
@@ -34,13 +47,84 @@
     color: rgb(148, 146, 146);
 }
 
-.buttonLogout{
+/* ====================
+    BOTÃO MENU
+==================== */
+
+.buttonMenu{
     display: flex;
-    gap: 20px;
-    padding: 0 20px;
+    gap: 10px;
+    padding: 0 15px;
     height: 50px;
     align-self: center;
     align-items: center;
     border: 1px solid rgb(204, 200, 200);
     border-radius: 8px;
+}
+
+/* ====================
+    NAV
+==================== */
+
+.navbar {
+    display: flex;
+    position: relative;
+}
+
+.menu {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+
+.titleMenu{
+    border-bottom: 1px solid black;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* ====================
+     ITENS DO MENU
+==================== */
+
+.divMenuItem {
+    font-size: 12px;
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+    text-align: start;
+    text-decoration: none;
+    color: black;
+    align-items: center;
+    height: 40px;
+    cursor: pointer;
+}
+
+.menuItem{
+    text-decoration: none;
+    color: black;
+}
+
+.divMenuItem:hover{
+    background-color: rgba(180, 178, 178, 0.349);
+}
+
+/* ====================
+    BOTÃO SAIR
+==================== */
+
+.divMenuItem:nth-child(4) {
+  border-top: 1px solid black;
+}
+
+.divMenuItem:nth-child(4) p{
+  color: red;
 }

@@ -6,10 +6,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LogOut } from "@deemlol/next-icons";
 import { jwtDecode } from "jwt-decode";
+import MenuIcon from '@mui/icons-material/Menu';
+import Link from "next/link";
+import { User } from "@deemlol/next-icons";
+import { FileText } from "@deemlol/next-icons";
 
 export default function Header() {
 
     const [nome, setNome] = useState("");
+    const [menuOpen, setMenuOpen] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -26,6 +31,10 @@ export default function Header() {
         router.push("/login");
   }
 
+    function handlePerfil() {
+        router.push("/perfil");
+  }
+
   return (
     <header className={styles.Header}>
         <div className={styles.left}>
@@ -36,7 +45,34 @@ export default function Header() {
         </div>
         </div>
 
-        <button className={styles.buttonLogout} onClick={handleLogout}> <LogOut size={24} color="#0a0909" /> Sair</button>
+        <nav className={styles.navbar}>
+            <button onClick={() => setMenuOpen(!menuOpen)} className={styles.buttonMenu}>
+                <MenuIcon/> <p>Menu</p>
+            </button>
+
+            {menuOpen && (
+                <div className={styles.menu}>
+                    <p className={styles.titleMenu}>Minha Conta</p>
+
+                    <div className={styles.divMenuItem} onClick={handlePerfil}>
+                        <User size={14} color="#000000" />
+                        <p className={styles.menuItem}>Perfil</p>
+                    </div>
+
+                    <div className={styles.divMenuItem}>
+                        <FileText size={14} color="#000000" />
+                        <p className={styles.menuItem}>Termos de Uso</p>
+                    </div>
+
+                    <div className={styles.divMenuItem} onClick={handleLogout}>
+                        <LogOut size={14} color="#000000" />
+                        <p className={styles.menuItem} >Sair</p>
+                    </div>
+                    
+                </div>
+            )}
+        </nav>
+
         
     </header>
   )

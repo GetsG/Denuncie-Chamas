@@ -2,20 +2,10 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import styles from "./page.module.css"
-
 import { FileText } from "@deemlol/next-icons";
-//<FileText size={24} color="#FFFFFF" /> MINHAS DENUNCIAS
-
 import { PlusCircle } from "@deemlol/next-icons";
-//<PlusCircle size={24} color="#FFFFFF" /> NOVA DENUNCIA
-
 import { BarChart2 } from "@deemlol/next-icons";
-//<BarChart2 size={24} color="#FFFFFF" /> TOTAL DENUNCIAS
-
 import { AlertTriangle } from "@deemlol/next-icons"
-//<AlertTriangle size={24} color="#FFFFFF" />
-
-
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 
 
