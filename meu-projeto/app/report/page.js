@@ -32,21 +32,21 @@ export default function Home() {
     <div className={styles.container}>
 
       {/* TITULO E DESCRIÇÃO*/}
-      <div>
-        <h4>Denunciar Incêndio</h4>
-        <p>Preencha as informações abaixo de forma rápida e objetiva</p>
+      <div className={styles.header}>
+        <h4 className={styles.headerTitle} >Denunciar Incêndio</h4>
+        <p className={styles.headerDescription}>Preencha as informações abaixo de forma rápida e objetiva</p>
       </div>
       {/*-------------------*/}
 
 
       {/* INICIO DO FORMULÁRIO*/}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 
-      {/*INPUT TIPO DE INCÊNCIO*/}
-        <div>
-          <h4>Tipo de Incêndio</h4>        
+      {/*TIPO DE INCÊNCIO*/}
+        <div className={styles.field}>
+          <h4 className={styles.fieldTitle}>Tipo de Incêndio</h4>        
 
-          <select
+          <select className={styles.select}
             {...register("tipoIncendio", {
             required: "Selecione o tipo de incêndio"
           })}>
@@ -58,51 +58,55 @@ export default function Home() {
           </select>
 
           {errors.tipoIncendio && (
-          <p>{errors.tipoIncendio.message}</p>
+          <p className={styles.fieldError}>{errors.tipoIncendio.message}</p>
         )}
         </div>
         {/*-------------------*/}
         
-        {/*INPUT LOCALIZAÇÃO*/}
-        <div>
+        {/*LOCALIZAÇÃO*/}
+        <div className={styles.locationSection}>
           <h4>Localização</h4>
-          <button>Capturar minha localização</button>
+          <button className={styles.locationButton} type='button'>Capturar minha localização</button>
         </div>
         {/*-------------------*/}
         
-        {/*INPUT IMAGEM*/}
-        <div>
+        {/*IMAGEM*/}
+        <div className={styles.photoSection}>
           <h4>Foto do Incêndio</h4>
-          <input  type="file" accept="image/*"></input>
+            <label className={styles.photoInput}> Clique para tirar foto ou selecionar
+              <input style={{display: "none"}} type="file" accept="image/*"></input>
+            </label>
         </div>
         {/*-------------------*/}
 
-        {/*INPUT DESCRIÇÃO DA SITUAÇÃO*/}
-        <div>
+        {/*DESCRIÇÃO DA SITUAÇÃO*/}
+        <div className={styles.descriptionSection}>
           <h4>Descrição da Situação</h4>
-          <input type='text' placeholder='Ex: Incêndio de grandes proporções com risco de se espalhar para casas vizinhas...'/>
+          <textarea
+            className={styles.descriptionInput}
+            placeholder="Ex: Incêndio de grandes proporções com risco de se espalhar para casas vizinhas..."
+            {...register("descricao", {
+            required: "Descreva a situação"
+  })}/>
         </div>
         {/*-------------------*/}
         
         {/*INFORMAÇÃO IMPORTANTE*/}
-        <div>
+        <div className={styles.warningBox}>
           <h4>Informação importante</h4>
           <p>Denúncias falsas podem resultar em responsabilização legal. Certifique-se de que as informações são verdadeiras.</p>
         </div>
 
         {/* BOTÃO CANCELAR E ENVIAR DENUNCIA*/}
-        <div>
-          <button onClick={() => {router.push("/dashboard")}}>Cancelar</button>
-          <button type='submit'>Enviar Denúncia</button>
+        <div className={styles.actions}>
+          <button className={styles.cancelButton} onClick={() => {router.push("/dashboard")}}>Cancelar</button>
+          <button className={styles.submitButton} type='submit'>Enviar Denúncia</button>
         </div>
         {/*-------------------*/}
         
 
       </form>
       {/* FIM DO FORMULÁRIO*/}
-
-      
-  
     
       <>
         <LoadingOverlay show={loading} text="Entrando..." />

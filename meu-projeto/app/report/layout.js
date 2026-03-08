@@ -18,7 +18,7 @@ export const metadata = {
 
 export default function ReportLayout({ children }) {
   return (
-    <body>
+    <body style={{ backgroundColor: "#ebedf0" }}>
       <Header/>
       <main>{children}</main>
     </body>

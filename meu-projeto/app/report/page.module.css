@@ -1,0 +1,171 @@
+.container{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    width: 40%;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    margin: 20px;
+}
+
+/* ====================
+    TITULO E DESCRIÇÃO
+==================== */
+
+.header{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background-color: #f5e1d9;
+    border-bottom: 1px solid black;
+    padding: 30px;
+    border-radius: 20px 20px 0 0;
+}
+
+.headerTitle{
+    font-size: 18px;
+}
+
+.headerDescription{
+    font-size: 13px;
+    color: rgb(148, 146, 146);
+}
+
+/*====================FORMULÁRIO====================*/
+
+.form{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 12px;
+}
+
+/*=================TIPO DE INCÊNDIO=================*/
+
+.field{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field h4{
+    font-size: 14px;
+}
+
+.field select{
+    background-color: rgba(211, 209, 209, 0.575);
+    padding: 5px;
+    border: 0;
+    border-radius: 10px;
+}
+
+/*===================LOCALIZAÇÃO===================*/
+
+.locationSection{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.locationSection h4{
+    font-size: 14px;
+}
+
+.locationButton{
+    padding: 10px;
+    border: 1px solid rgb(214, 212, 212);
+    border-radius: 20px;
+    cursor: pointer;
+}
+    
+
+/*=====================IMAGEM=====================*/
+
+.photoSection{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.photoSection h4{
+    font-size: 14px;
+}
+
+.photoInput{
+    padding: 50px;
+    border: 1px dashed rgb(214, 212, 212);
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/*====================DESCRIÇÃO====================*/
+
+.descriptionSection{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.descriptionSection h4{
+    font-size: 14px;
+}
+
+.descriptionInput{
+    background-color: rgba(211, 209, 209, 0.384);
+    height: 100px;
+    padding: 12px;
+    border-radius: 20px;
+    vertical-align: top;
+    line-height: normal;
+    text-align: start;
+    border: 1px solid rgb(214, 212, 212);
+    resize: none;
+}
+
+/*===============INFORMAÇÃO IMPORTANTE===============*/
+
+.warningBox{
+    background-color: rgb(235, 214, 175);
+    border: 1px solid orange;
+    border-radius: 20px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.warningBox h4{
+    font-size: 14px;
+}
+
+.warningBox p{
+    font-size: 14px;
+}
+
+/*===============BUTTON CANCELAR / SUBMIT===============*/
+
+.actions{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.actions button{
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+.submitButton{
+    background: linear-gradient(
+     to right,
+     #f97316,
+     #dc2626);
+     color: white;
+}
+
+
+
