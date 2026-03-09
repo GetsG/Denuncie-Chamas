@@ -121,10 +121,10 @@
     BOTÃO SAIR
 ==================== */
 
-.divMenuItem:nth-child(4) {
+.divMenuItem:nth-child(5) {
   border-top: 1px solid black;
 }
 
-.divMenuItem:nth-child(4) p{
+.divMenuItem:nth-child(5) p{
   color: red;
 }

@@ -7,6 +7,11 @@ import { useEffect } from 'react';
 import styles from './page.module.css'
 import LoadingOverlay from "../components/LoadingOverlay"
 
+import WhatshotIcon from '@mui/icons-material/Whatshot'; //FOGO
+import PlaceIcon from '@mui/icons-material/Place'; //LOCALIZAÇÃO
+import CameraAltIcon from '@mui/icons-material/CameraAlt'; //CAMERA
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'; //WARN
+
 export default function Home() {
 
   const {register, handleSubmit, formState: {errors}} = useForm()
@@ -33,7 +38,10 @@ export default function Home() {
 
       {/* TITULO E DESCRIÇÃO*/}
       <div className={styles.header}>
-        <h4 className={styles.headerTitle} >Denunciar Incêndio</h4>
+        <h4 className={styles.headerTitle} >
+          <WhatshotIcon className={styles.iconPendente} sx={{ fontSize: 20 , color: '#fd0000'}}/>
+          Denunciar Incêndio
+        </h4>
         <p className={styles.headerDescription}>Preencha as informações abaixo de forma rápida e objetiva</p>
       </div>
       {/*-------------------*/}
@@ -65,15 +73,24 @@ export default function Home() {
         
         {/*LOCALIZAÇÃO*/}
         <div className={styles.locationSection}>
-          <h4>Localização</h4>
-          <button className={styles.locationButton} type='button'>Capturar minha localização</button>
+          <h4>
+            <PlaceIcon className={styles.iconPendente} sx={{ fontSize: 17 , color: '#000000'}}/>
+            Localização
+          </h4>
+          <button className={styles.locationButton} type='button'>
+            <PlaceIcon className={styles.iconPendente} sx={{ fontSize: 17 , color: '#000000'}}/>
+            Capturar minha localização
+          </button>
         </div>
         {/*-------------------*/}
         
         {/*IMAGEM*/}
         <div className={styles.photoSection}>
-          <h4>Foto do Incêndio</h4>
-            <label className={styles.photoInput}> Clique para tirar foto ou selecionar
+          <h4>
+            <CameraAltIcon className={styles.iconPendente} sx={{ fontSize: 17 , color: '#000000'}}/>
+            Foto do Incêndio
+          </h4>
+            <label className={styles.photoInput}><CameraAltIcon className={styles.iconPendente} sx={{ fontSize: 50 , color: '#00000065'}}/> <p>Clique para tirar foto ou selecionar</p>
               <input style={{display: "none"}} type="file" accept="image/*"></input>
             </label>
         </div>
@@ -93,6 +110,7 @@ export default function Home() {
         
         {/*INFORMAÇÃO IMPORTANTE*/}
         <div className={styles.warningBox}>
+          <ErrorOutlineIcon className={styles.iconPendente} sx={{ fontSize: 17 , color: '#b1780e'}}/>
           <h4>Informação importante</h4>
           <p>Denúncias falsas podem resultar em responsabilização legal. Certifique-se de que as informações são verdadeiras.</p>
         </div>

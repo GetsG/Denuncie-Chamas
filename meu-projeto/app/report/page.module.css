@@ -3,8 +3,10 @@
     display: flex;
     flex-direction: column;
     justify-self: center;
+    justify-content: center; /* horizontal */
+    align-items: center;
     width: 30%;
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid rgb(211, 210, 210);
     border-radius: 20px;
     margin: 20px;
 }
@@ -12,7 +14,7 @@
 /* CELULAR */
 @media (max-width: 768px) {
   .container {
-    width: 70%;
+    width: 80%;
   }
 }
 
@@ -24,14 +26,17 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    background-color: #f5e1d9;
-    border-bottom: 1px solid black;
+    background-color: #ff660015;
+    border-bottom: 1px solid rgb(211, 210, 210);
     padding: 30px;
     border-radius: 20px 20px 0 0;
+    width: 100%;
 }
 
 .headerTitle{
     font-size: 18px;
+    display: flex;
+    gap: 2px;
 }
 
 .headerDescription{
@@ -45,7 +50,7 @@
     display: flex;
     flex-direction: column;
     padding: 30px;
-    gap: 12px;
+    gap: 15px;
 }
 
 /*=================TIPO DE INCÊNDIO=================*/
@@ -76,7 +81,9 @@
 }
 
 .locationSection h4{
+    display: flex;
     font-size: 14px;
+    gap: 5px;
 }
 
 .locationButton{
@@ -84,6 +91,10 @@
     border: 1px solid rgb(214, 212, 212);
     border-radius: 20px;
     cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    gap: 5px;
+    justify-content: center;
 }
     
 
@@ -96,15 +107,20 @@
 }
 
 .photoSection h4{
+    display: flex;
     font-size: 14px;
+    gap: 5px;
 }
 
 .photoInput{
+    display: flex;
+    flex-direction: column;
     padding: 50px;
     border: 1px dashed rgb(214, 212, 212);
-    text-align: center;
     border-radius: 20px;
     cursor: pointer;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.555);
 }
 
 /*====================DESCRIÇÃO====================*/
@@ -134,21 +150,25 @@
 /*===============INFORMAÇÃO IMPORTANTE===============*/
 
 .warningBox{
-    background-color: rgb(235, 214, 175);
-    border: 1px solid orange;
+    background-color: rgba(235, 214, 175, 0.76);
+    border: 1px solid #ffa500;
     border-radius: 20px;
     padding: 12px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 25px 1fr;
     gap: 5px;
 }
 
 .warningBox h4{
     font-size: 14px;
+    grid-column: 2;
+    color: rgb(170, 118, 20);
 }
 
 .warningBox p{
     font-size: 14px;
+    grid-column: 2;
+    color: rgb(184, 126, 20);
 }
 
 /*===============BUTTON CANCELAR / SUBMIT===============*/
@@ -162,8 +182,9 @@
 .actions button{
     padding: 10px;
     border-radius: 20px;
-    border: 1px solid gray;
+    border: 1px solid rgb(211, 210, 210);
     cursor: pointer;
+    
 }
 
 .submitButton{

@@ -9,6 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import MenuIcon from '@mui/icons-material/Menu';
 import { User } from "@deemlol/next-icons";
 import { FileText } from "@deemlol/next-icons";
+import { Grid } from "@deemlol/next-icons";
 
 export default function Header() {
 
@@ -34,6 +35,10 @@ export default function Header() {
         router.push("/perfil");
   }
 
+  function handleDashboard() {
+        router.push("/dashboard");
+  }
+
   return (
     <header className={styles.Header}>
         <div className={styles.left}>
@@ -52,6 +57,11 @@ export default function Header() {
             {menuOpen && (
                 <div className={styles.menu}>
                     <p className={styles.titleMenu}>Minha Conta</p>
+
+                    <div className={styles.divMenuItem} onClick={handleDashboard}>
+                        <Grid size={14} color="#000000" />
+                        <p className={styles.menuItem}>Tela inicial</p>
+                    </div>
 
                     <div className={styles.divMenuItem} onClick={handlePerfil}>
                         <User size={14} color="#000000" />

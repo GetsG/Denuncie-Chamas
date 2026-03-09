@@ -8,7 +8,7 @@ import { Mail } from "@deemlol/next-icons"
 import Link from "next/link";
 import { useRouter } from "next/navigation"
 import { login } from '../services/loginService';
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import LoadingOverlay from "../components/LoadingOverlay"
 
 export default function Home() {
@@ -16,7 +16,13 @@ export default function Home() {
   const {register, handleSubmit, formState: {errors}} = useForm()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [erro, setErro] = useState(false)
+  const [erro, setErro] = useState("")
+
+  useEffect(() => {
+  fetch("https://denuncie-chamas-backend.onrender.com/auth/login", {
+    method: "OPTIONS"
+  }).catch(() => {})
+}, [])
 
   {/* Retorno do formulário, email e senha */}
   const onSubmit = async (data) => {
@@ -38,7 +44,7 @@ export default function Home() {
   } 
   catch (error) {
     console.error(error.message)
-    setErro(true)
+    setErro(error.message || "Erro ao fazer login")
 
   } finally{
     setLoading(false)
@@ -90,7 +96,7 @@ export default function Home() {
         {/* ------------------------------------ */}
 
         {/* Erro Email ou Senha */}
-        <p className={styles.erroLogar}>{erro ? "E-mail ou senha incorretos." : ""}</p>
+       <p className={styles.erroLogar}>{erro}</p>
         {/* ------------------------------------ */}
 
         {/* Botão Entrar */}
