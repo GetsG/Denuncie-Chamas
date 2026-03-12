@@ -63,6 +63,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
+
 }
 
 .dashboardActions button{
@@ -74,7 +75,8 @@
     border: 1px dashed rgb(214, 212, 212);
     padding: 20px;
     margin: 0 0 24px 0;
-    font-size: 16px
+    font-size: 16px;
+    color: #000000;
 }
 
 .buttonNovaDenuncia:hover{

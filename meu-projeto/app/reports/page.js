@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form";
 import styles from "./page.module.css"
+import { getReports } from "../services/getReports";
 
 import { FileText } from "@deemlol/next-icons";
 
@@ -17,9 +18,22 @@ export default function Reports(){
     router.push("/login")
     }}, [])
 
+    useEffect(() => {
+    const carregar = async () => {
+      try {
+        const data = await getReports();
+        setReports(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    carregar();
+  }, []);
+
     const {register, handleSubmit, setValue, formState: { errors }} = useForm()
 
-    const [totalOcorrencias, setTotalOcorrencias] = useState(0);
+    const [reports, setReports] = useState([]);
 
     return(
         <div className={styles.container}>
@@ -70,17 +84,30 @@ export default function Reports(){
 
             {/* DENUNCIAS */}
             <div className={styles.reportsTitle}>
-                <h2>{totalOcorrencias} Denúncias</h2>
-                {totalOcorrencias === 0 ? <p>Nenhuma denúncia encontrada com os filtros selecionados.</p> : ""}
+                <h2>{reports.length} Denúncias</h2>
+                {reports.length === 0 ? <p>Nenhuma denúncia encontrada com os filtros selecionados.</p> : ""}
             </div>
 
-                {totalOcorrencias === 0 ? 
-                <div className={styles.emptyState}>
-                    <FileText size={60} color="#bbb8b8b2" />
-                    <h2>Nenhuma denúncia encontrada</h2>
-                    <p>Você ainda não registrou nenhuma denúncia.</p>
-                    <button onClick={() => router.push("/report")}>Registrar Primeira Denúncia</button>
-                </div> : ""}
+                {reports.length === 0 ? (
+                    <div className={styles.emptyState}>
+                        <FileText size={60} color="#bbb8b8b2" />
+                        <h2>Nenhuma denúncia encontrada</h2>
+                        <p>Você ainda não registrou nenhuma denúncia.</p>
+                        <button onClick={() => router.push("/report")}>Registrar Primeira Denúncia</button>
+                    </div>
+) : (
+                <div className={styles.reports}>
+                {reports.map((report) => (
+                    <div className={styles.cardReports} key={report.id_denuncia}>
+                        <img src={`data:image/jpeg;base64,${report.imagem}`} alt="Incêndio"/>
+                        <p className={`${styles.gravidadeReport} ${report.gravidade === "ALTA" ? styles.gravidadeReportAlto : styles.gravidadeReportMedio}`}>{report.gravidade === "ALTA" ? "Alta" : "Média"}</p>
+                        <h3 className={styles.tipoReport}>{report.tipoIncendio}</h3>
+                        <p className={styles.descricaoReport}>{report.descricao}</p>
+                    </div>
+    ))}
+  </div>
+)}
+                
 
 
 

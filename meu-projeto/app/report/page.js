@@ -1,13 +1,12 @@
 "use client";
-import Image from 'next/image'
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useEffect } from 'react';
 import styles from './page.module.css'
 import LoadingOverlay from "../components/LoadingOverlay"
+import { postReport } from "../services/postReport";
 
-import WhatshotIcon from '@mui/icons-material/Whatshot'; //FOGO
 import PlaceIcon from '@mui/icons-material/Place'; //LOCALIZAÇÃO
 import CameraAltIcon from '@mui/icons-material/CameraAlt'; //CAMERA
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'; //WARN
@@ -18,12 +17,18 @@ import capturarLocalizacao from "../services/geoLocation";
 
 export default function Report() {
 
-  const {register, handleSubmit, setValue, formState: { errors }} = useForm()
+  const {register, handleSubmit, setValue, formState: { errors } } = useForm();
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
   const [previewImagem, setPreviewImagem] = useState(null);
+
+      useEffect(() => {
+        register("imagem", {
+          required: "Insira uma Imagem"
+      });
+      }, [register]);
 
       //VERIFICAR SE O TOKEN ESTÁ ARMAZENADO NO STORAGE
       useEffect(() => {const token = localStorage.getItem("token")
@@ -33,11 +38,21 @@ export default function Report() {
 
         {/* Retorno do formulário */}
         const onSubmit = async (data) => {
-          console.log(data)
-        
-            setTimeout(() => {
-            router.push("/dashboard");
-          }, 1500);}
+
+          try {
+            setLoading(true);
+            const result = await postReport(data);
+            console.log("Denúncia enviada com sucesso:", result);
+            router.push("/reports");
+
+          } catch (error) {
+            console.error("Erro ao enviar denúncia:", error.message);
+            alert(error.message);
+
+          } finally {
+              setLoading(false);
+          }
+};
 
   return (
     <div className={styles.container}>
@@ -62,11 +77,11 @@ export default function Report() {
             required: "Selecione o tipo de incêndio"
           })}>
             <option value="">Selecione o tipo</option>
-            <option value="residencial">🏠 Residencial</option>
-            <option value="comercial">🏬 Comercial</option>
-            <option value="florestal">🌲 Florestal</option>
-            <option value="urbano">🏙️ Urbano</option>
-            <option value="rural">🌾 Rural</option>
+            <option value="Residencial">🏠 Residencial</option>
+            <option value="Comercial">🏬 Comercial</option>
+            <option value="Florestal">🌲 Florestal</option>
+            <option value="Urbano">🏙️ Urbano</option>
+            <option value="Rural">🌾 Rural</option>
           </select>
 
           {errors.tipoIncendio && (
@@ -130,16 +145,19 @@ export default function Report() {
               </> 
               )}
 
-          <input style={{ display: "none" }} type="file" accept="image/*"
-            {...register("imagem", {
-            required: "Insira uma Imagem"})}
+          <input style={{ display: "none" }}
+            type="file"
+            accept="image/*"
             onChange={(e) => {
-            const file = e.target.files?.[0];
+              const file = e.target.files?.[0];
 
             if (file) {
-              const imageUrl = URL.createObjectURL(file);
-              setPreviewImagem(imageUrl);
-            }}}
+              setValue("imagem", file, { shouldValidate: true });
+
+            const imageUrl = URL.createObjectURL(file);
+            setPreviewImagem(imageUrl);
+            }
+            }}
           />
 
         </label>
@@ -170,7 +188,7 @@ export default function Report() {
         {/*Pessoas no local*/}
         
         <div className={styles.riskAlert}>
-          <input type="checkbox" {...register("pessoasEmRisco")} class={styles.riskCheckbox}/>
+          <input type="checkbox" {...register("gravidade")} className={styles.riskCheckbox}/>
             <div className={styles.riskContent}>
               <h2 className={styles.riskTitle}>
                 <WarningIcon className={styles.iconPendente} sx={{ fontSize: 14 , color: '#ecc92d'}}/>

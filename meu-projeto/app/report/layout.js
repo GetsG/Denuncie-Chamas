@@ -20,7 +20,7 @@ export default function ReportLayout({ children }) {
   return (
     <body style={{ backgroundColor: "#ebedf0" }}>
       <Header/>
-      <main>{children}</main>
+      {children}
     </body>
   );
 }
