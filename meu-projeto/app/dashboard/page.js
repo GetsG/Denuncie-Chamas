@@ -8,11 +8,17 @@ import { BarChart2 } from "@deemlol/next-icons";
 import { AlertTriangle } from "@deemlol/next-icons"
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 import { useRouter } from "next/navigation"
+import { getReports } from "../services/getReports";
+import converterData from "../services/converterDataBrParaDate"
 
 
 export default function Dashboard(){
 
     const router = useRouter()
+
+    const [reports, setReports] = useState([]);
+
+    const totalDenuncias = reports.length;
 
     //VERIFICAR SE O TOKEN ESTÁ ARMAZENADO NO STORAGE
     useEffect(() => {const token = localStorage.getItem("token")
@@ -24,11 +30,39 @@ export default function Dashboard(){
     router.push("/report");
   }
 
-    
-    const [total, setTotal] = useState(0)
-    const [pendentes, setPendentes] = useState(0)
-    const [emAndamento, setEmAndamento] = useState(0)
-    const [gravidadeAlta, setGravidadeAlta] = useState(0)
+        useEffect(() => {
+            const carregarDenuncias = async () => {
+            try {
+                const data = await getReports();
+                setReports(data);
+            } catch (error) {
+                console.error("Erro ao carregar denúncias:", error);
+            }};
+  
+      carregarDenuncias();
+    }, []);
+
+    //CARDS INFORMATIVOS QUANTIDADE DE DENUNCIAS
+    const totalPendentes = reports.filter(
+    (report) => report.status === "PENDENTE"
+    ).length;
+
+    const totalEmAndamento = reports.filter(
+    (report) => report.status === "EM_ANDAMENTO"
+    ).length;
+
+    const totalGravidadeAlta = reports.filter(
+    (report) => report.gravidade === "ALTA" && report.status != "RESOLVIDA"
+    ).length;
+
+    //ULTIMAS 5 DENUNCIAS
+    const ultimasDenuncias = [...reports]
+    .sort(
+    (a, b) =>
+      converterData(b.dataRegistro) -
+      converterData(a.dataRegistro)
+  )
+  .slice(0, 5);
 
     return(
         <div className={styles.container}>
@@ -44,26 +78,26 @@ export default function Dashboard(){
             <div className={styles.dashboardStats}>
                 <section>
                     <h4>Total de Denúncias</h4>
-                    <p>{total}</p>
+                    <p>{totalDenuncias}</p>
                     <BarChart2 size={25} color="#3f7cd8" />
                 </section>
 
                 <section>
                     <h4>Pendentes</h4>
-                    <p>{pendentes}</p>
+                    <p>{totalPendentes}</p>
                     <Brightness1Icon className={styles.iconPendente} sx={{ fontSize: 25 , color: '#F0B100'}}/>
                 </section>
 
                 <section>
                     <h4>Em Andamento</h4>
-                    <p>{emAndamento}</p>
+                    <p>{totalEmAndamento}</p>
                     <Brightness1Icon className={styles.iconEmAndamento} sx={{ fontSize: 25, color: '#2B7FFF'}} />
 
                 </section>
 
                 <section>
-                    <h4>Gravidade Alta</h4>
-                    <p>{gravidadeAlta}</p>
+                    <h4>Alta Gravidade (Pendentes)</h4>
+                    <p>{totalGravidadeAlta}</p>
                     <AlertTriangle size={25} color="#f30000"/>
                 </section>
             </div>
@@ -92,14 +126,50 @@ export default function Dashboard(){
                     <p>Suas últimas 5 denúncias registradas</p>
                 </div>
                 
-                {total === 0 ? 
+                {totalDenuncias === 0 ? 
                     <div className={styles.noReports}>
                         <FileText size={60} color="#bbb8b8b2" />
                         <p>Nenhuma denúncia registrada ainda</p>
                         <button onClick={() => router.push("/report")}>Criar primeira denúncia</button>
 
-                    </div> : ""
-            }
+                    </div> : 
+                    (<div className={styles.listaRecentes}>
+                        {ultimasDenuncias.map((report) => (
+                            <div key={report.id_denuncia} className={styles.cardRecente}>
+                                <div className={styles.cardRecenteConteudo}>
+                                    <div className={styles.tipo_Gravidade}>
+                                        <h3>{report.tipoIncendio === "RESIDENCIAL"
+                                        ? "Residencial"
+                                        : report.tipoIncendio === "COMERCIAL"
+                                        ? "Comercial"
+                                        : report.tipoIncendio === "FLORESTAL"
+                                        ? "Florestal"
+                                        : report.tipoIncendio === "URBANO"
+                                        ? "Urbano":
+                                        "Rural"}</h3>
+                                        <p className={`${styles.gravidadeReport} ${report.gravidade === "ALTA" 
+                                            ? styles.gravidadeReportAlto : styles.gravidadeReportMedio}`}>
+                                                {report.gravidade === "ALTA" ? "Alta" : "Média"}</p>
+
+                                        <p className={`${styles.statusReport} 
+                                                        ${report.status === "PENDENTE" 
+                                                        ? styles.statusReportPendente
+                                                        : report.status === "EM_ANDAMENTO" 
+                                                        ? styles.statusReportEmAndamento 
+                                                        : styles.statusReportResolvida}`}>
+                                            {report.status === "PENDENTE"
+                                            ? "Pendente"
+                                            : report.status === "EM_ANDAMENTO"
+                                            ?  "Em andamento" 
+                                            : "Resolvida"}</p>
+                                    </div>
+                                    <p className={styles.location}>{report.latitude} {report.longitude}</p>
+                                    <p className={styles.date}>{report.dataRegistro}</p>
+                                    <p className={styles.descricaoReport}>{report.descricao}</p>
+                                </div>
+                            </div>
+                        ))}
+                        </div> )}
 
             </div>
             {/* ------------------------------------ */}

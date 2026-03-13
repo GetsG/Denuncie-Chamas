@@ -15,8 +15,6 @@ export default function capturarLocalizacao(setValue, setLatitude, setLongitude)
       setLatitude(latitude);
       setLongitude(longitude);
 
-      console.log("Latitude:", latitude);
-      console.log("Longitude:", longitude);
     },
     (error) => {
       console.error("Erro ao obter localização:", error);

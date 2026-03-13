@@ -109,6 +109,7 @@
 .containerTitleRecentDenuncias p{
     font-size: 14px;
     color: rgb(148, 146, 146);
+    margin-bottom: 10px;
 }
 
 .noReports{
@@ -135,4 +136,87 @@
      color: white;
      font-size: 16px;
      font-weight: bold;
+}
+
+.listaRecentes{
+    
+}
+
+.cardRecente{
+    border: 1px solid rgb(214, 212, 212);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.cardRecenteConteudo h3{
+    font-size: 15px;
+    font-weight: normal;
+    color: #000000;
+}
+
+.tipo_Gravidade{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.gravidadeReport{
+    padding: 3px 10px;
+    align-content: center;
+    border-radius: 10px;
+    width: max-content;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.gravidadeReportAlto{
+    border: 1px solid red;
+    background-color: #dc26262c;
+    color: rgb(179, 2, 2);
+}
+
+.gravidadeReportMedio{
+    border: 1px solid rgb(161, 179, 7);
+    background-color: #8eac0628;
+    color: rgb(124, 124, 3);
+}
+
+.statusReport{
+    margin-left: auto;
+    border-radius: 20px;
+    margin-right: 10px;
+    padding: 4px;
+    font-weight: bold;
+    font-size: 10px;
+    background-color: #9e9e9d6b;
+
+}
+
+.statusReportPendente{
+    color: rgb(0, 0, 0);
+}
+
+.statusReportEmAndamento{
+    color: #3532eb;
+}
+
+.statusReportResolvida{
+    color: rgb(1, 134, 19);
+}
+
+.location{
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+.date{
+    font-size: 12px;
+}
+
+.descricaoReport{
+    font-size: 12px;
+    margin-top: 10px;
 }

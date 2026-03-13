@@ -17,12 +17,13 @@ import capturarLocalizacao from "../services/geoLocation";
 
 export default function Report() {
 
-  const {register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const {register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
   const [previewImagem, setPreviewImagem] = useState(null);
+  const descricao = watch("descricao") || "";
 
       useEffect(() => {
         register("imagem", {
@@ -175,9 +176,14 @@ export default function Report() {
           <textarea
             className={styles.descriptionInput}
             placeholder="Ex: Incêndio de grandes proporções com risco de se espalhar para casas vizinhas..."
+            maxLength={100}
             {...register("descricao", {
-            required: "Descreva a situação"
+            required: "Descreva a situação"       
   })}/>
+
+          <span className={styles.characterCounter}>
+            {descricao.length}/100
+          </span>
 
           {errors.descricao && (
           <p className={styles.errors}>{errors.descricao.message}</p>

@@ -7,6 +7,8 @@ import styles from "./page.module.css"
 import { getReports } from "../services/getReports";
 
 import { FileText } from "@deemlol/next-icons";
+import PlaceIcon from '@mui/icons-material/Place';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 export default function Reports(){
 
@@ -35,6 +37,23 @@ export default function Reports(){
 
     const [reports, setReports] = useState([]);
 
+    const [filtroTipo, setFiltroTipo] = useState("Todos");
+    const [filtroStatus, setFiltroStatus] = useState("Todos");
+    const [filtroGravidade, setFiltroGravidade] = useState("Todos");
+
+    const reportsFiltrados = reports.filter((report) => {
+  const matchTipo =
+    filtroTipo === "Todos" || report.tipoIncendio === filtroTipo;
+
+  const matchStatus =
+    filtroStatus === "Todos" || report.status === filtroStatus;
+
+  const matchGravidade =
+    filtroGravidade === "Todos" || report.gravidade === filtroGravidade;
+
+  return matchTipo && matchStatus && matchGravidade;
+});
+
     return(
         <div className={styles.container}>
             
@@ -51,32 +70,38 @@ export default function Reports(){
                 <div className={styles.filtersGroup}>
                     <div className={styles.filterItem}>
                         <h4>Tipo</h4>
-                            <select {...register("tipo")}>
-                                <option value="">Todos</option>
-                                <option value="residencial">Residencial</option>
-                                <option value="comercial">Comercial</option>
-                                <option value="florestal">Florestal</option>
-                                <option value="urbano">Urbano</option>
-                                <option value="rural">Rural</option>
+                            <select {...register("tipo")}
+                            value={filtroTipo}
+                            onChange={(e) => setFiltroTipo(e.target.value)}>
+                                  <option value="Todos">Todos</option>
+                                  <option value="RESIDENCIAL">Residencial</option>
+                                  <option value="COMERCIAL">Comercial</option>
+                                  <option value="FLORESTAL">Florestal</option>
+                                  <option value="URBANO">Urbano</option>
+                                  <option value="RURAL">Rural</option>
                             </select>
                     </div>
 
                     <div className={styles.filterItem}>
                         <h4>Status</h4>
-                            <select {...register("status")}>
-                                <option value="">Todos</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="emAndamento">Em andamento</option>
-                                <option value="resolvida">Resolvida</option>
+                            <select {...register("status")}
+                            value={filtroStatus}
+                            onChange={(e) => setFiltroStatus(e.target.value)}>
+                                <option value="Todos">Todos</option>
+                                <option value="PENDENTE">Pendente</option>
+                                <option value="EM_ANDAMENTO">Em andamento</option>
+                                <option value="RESOLVIDA">Resolvida</option>
                             </select>
                     </div>
 
                     <div className={styles.filterItem}>
                         <h4>Gravidade</h4>
-                            <select {...register("gravidade")}>
-                                <option value="">Todos</option>
-                                <option value="media">Média</option>
-                                <option value="alta">Alta</option>
+                            <select {...register("gravidade")}
+                            value={filtroGravidade}
+                            onChange={(e) => setFiltroGravidade(e.target.value)}>
+                                <option value="Todos">Todos</option>
+                                <option value="MEDIA">Média</option>
+                                <option value="ALTA">Alta</option>
                             </select>
                     </div>
                 </div>
@@ -84,8 +109,8 @@ export default function Reports(){
 
             {/* DENUNCIAS */}
             <div className={styles.reportsTitle}>
-                <h2>{reports.length} Denúncias</h2>
-                {reports.length === 0 ? <p>Nenhuma denúncia encontrada com os filtros selecionados.</p> : ""}
+                <h2>{reportsFiltrados.length} Denúncias</h2>
+                {reportsFiltrados.length === 0 ? <p>Nenhuma denúncia encontrada com os filtros selecionados.</p> : ""}
             </div>
 
                 {reports.length === 0 ? (
@@ -97,12 +122,39 @@ export default function Reports(){
                     </div>
 ) : (
                 <div className={styles.reports}>
-                {reports.map((report) => (
+                {reportsFiltrados.map((report) => (
                     <div className={styles.cardReports} key={report.id_denuncia}>
                         <img src={`data:image/jpeg;base64,${report.imagem}`} alt="Incêndio"/>
-                        <p className={`${styles.gravidadeReport} ${report.gravidade === "ALTA" ? styles.gravidadeReportAlto : styles.gravidadeReportMedio}`}>{report.gravidade === "ALTA" ? "Alta" : "Média"}</p>
-                        <h3 className={styles.tipoReport}>{report.tipoIncendio}</h3>
+                        <div className={styles.gravidade_stats}>
+                            <p className={`${styles.gravidadeReport} ${report.gravidade === "ALTA" ?
+                                styles.gravidadeReportAlto : styles.gravidadeReportMedio}`}>
+                                    {report.gravidade === "ALTA" ? "Alta" : "Média"}</p>
+
+                            <p className={`${styles.statusReport} 
+                            ${report.status === "PENDENTE" 
+                            ? styles.statusReportPendente
+                            : report.status === "EM_ANDAMENTO" 
+                            ? styles.statusReportEmAndamento 
+                            : styles.statusReportResolvida}`}>
+                                    {report.status === "PENDENTE"
+                                    ? "Pendente"
+                                    : report.status === "EM_ANDAMENTO"
+                                    ?  "Em andamento" 
+                                    : "Resolvida"}</p>
+                        </div>
+                        <h3 className={styles.tipoReport}>
+                            {report.tipoIncendio === "RESIDENCIAL"
+                            ? "🏠 Residencial"
+                            : report.tipoIncendio === "COMERCIAL"
+                            ? "🏬 Comercial"
+                            : report.tipoIncendio === "FLORESTAL"
+                            ? "🌲 Florestal"
+                            : report.tipoIncendio === "URBANO"
+                            ? "🏙️ Urbano":
+                            "🌾 Rural"}</h3>
                         <p className={styles.descricaoReport}>{report.descricao}</p>
+                        <p className={styles.location}><PlaceIcon sx={{ fontSize: 20 , color: '#000000'}}/> {report.latitude} {report.longitude}</p>
+                        <p className={styles.date}><AccessTimeIcon sx={{ fontSize: 20 , color: '#000000'}}/>{report.dataRegistro}</p>
                     </div>
     ))}
   </div>

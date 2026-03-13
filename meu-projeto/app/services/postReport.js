@@ -25,8 +25,6 @@ export const postReport = async (data) => {
     imagem: base64Limpo
   };
 
-  console.log("BODY ENVIADO:", body);
-
   const response = await fetch("https://denuncie-chamas-backend.onrender.com/reports", {
     method: "POST",
     headers: {
@@ -37,9 +35,6 @@ export const postReport = async (data) => {
   });
 
   const texto = await response.text();
-
-  console.log("STATUS:", response.status);
-  console.log("RESPOSTA BACK:", texto);
 
   if (!response.ok) {
     throw new Error(`Status ${response.status} - ${texto}`);
