@@ -35,6 +35,10 @@ export default function Header() {
         router.push("/dashboard");
   }
 
+  function handleTermos() {
+        router.push("https://denuncie-chamas-backend.onrender.com/termos");
+  }
+
   return (
     <header className={styles.Header}>
         <div className={styles.left} onClick={() => router.push("/dashboard")}>
@@ -59,7 +63,7 @@ export default function Header() {
                         <p className={styles.menuItem}>Tela inicial</p>
                     </div>
 
-                    <div className={styles.divMenuItem}>
+                    <div className={styles.divMenuItem} onClick={handleTermos}>
                         <FileText size={14} color="#000000" />
                         <p className={styles.menuItem}>Termos de Uso</p>
                     </div>

@@ -172,6 +172,24 @@ export default function Home() {
             </div>
         {/* ------------------------------------ */}
 
+        {/* Termos */}
+
+            <div className={styles.termos} style={{ display: "flex", margin: "5px 0 ", alignItems: "center", gap: "8px", flexDirection: "row" }}>
+              <input className={styles.checkboxTermos}
+                      style={{ width: "15px", height: "15px" }}
+                      type="checkbox"
+                      {...register("confirmTermos", { required: "Aceite os termos de uso" })}/>
+  
+              <span className={styles.termosTexto} style={{ margin: 0 }}>
+                Aceite os{" "}
+              <Link href="https://denuncie-chamas-backend.onrender.com/termos" className={styles.linkTermos}>
+                Termos de uso
+              </Link>
+              </span>
+            </div>
+
+              {errors.confirmTermos && <p className={styles.errors}>{errors.confirmTermos?.message}</p>}
+
         {/* Botão Cadastrar */}
             <button type="submit">
                 Cadastrar
