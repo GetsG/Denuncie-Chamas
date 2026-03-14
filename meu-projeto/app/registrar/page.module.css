@@ -84,6 +84,23 @@
     margin-bottom: 5px;
 }
 
+.termosTexto{
+    font-size: 14px;
+}
+
+.linkTermos{
+    text-decoration: none;
+    color: #f97316;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.checkboxTermos {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
 .form button{
     background: linear-gradient(
      to right,

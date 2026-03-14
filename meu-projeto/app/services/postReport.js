@@ -1,8 +1,8 @@
 import { converterParaBase64 } from "@/utils/converterParaBase64";
 
 export const postReport = async (data) => {
+  
   const token = localStorage.getItem("token");
-
   if (!token) {
     throw new Error("Usuário não autenticado");
   }
