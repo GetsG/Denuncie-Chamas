@@ -61,6 +61,7 @@
     align-items: center;
     border: 1px solid rgb(204, 200, 200);
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .buttonMenu p{

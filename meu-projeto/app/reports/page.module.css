@@ -12,10 +12,23 @@
 /*===============TITULO FILTROS===============*/
 .filtersHeader{
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     gap: 5px;
     font-size: 18px;
     margin-bottom: 20px;
+}
+
+.filters{
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonReport{
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 20px;
+    border: 1px solid rgb(211, 210, 210);
+    cursor: pointer;
 }
 
 .filtersHeader p{

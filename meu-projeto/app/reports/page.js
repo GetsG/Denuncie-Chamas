@@ -9,6 +9,7 @@ import { getReports } from "../services/getReports";
 import { FileText } from "@deemlol/next-icons";
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { gerarRelatorio } from "@/services/gerarRelatorio";
 
 export default function Reports(){
 
@@ -62,8 +63,17 @@ export default function Reports(){
 
                 {/* TITULO E SUBTITULO */}
                 <div className={styles.filtersHeader}>
-                    <h4>Filtros</h4>
-                    <p>Filtre suas denúncias por tipo, status ou gravidade</p>
+
+                    <div className={styles.filters}>
+                        <h4>Filtros</h4>
+                        <p>Filtre suas denúncias por tipo, status ou gravidade</p>
+                    </div>
+
+                    <div className={styles.report}>
+                        <button className={styles.buttonReport} onClick={gerarRelatorio} >
+                            🖨️ Exportar Relatório
+                        </button>
+                    </div>
                 </div>
 
             {/* FILTROS */}
