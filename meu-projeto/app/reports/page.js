@@ -10,8 +10,22 @@ import { FileText } from "@deemlol/next-icons";
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { gerarRelatorio } from "@/services/gerarRelatorio";
+import { dropReport } from "@/services/dropReport";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Reports(){
+
+    const [gerando, setGerando] = useState(false);
+
+    const handleRelatorio = async () => {
+        setGerando(true);
+    try {
+        await gerarRelatorio();
+    } finally {
+        setGerando(false);
+    }
+};
+
 
     const router = useRouter()
 
@@ -25,6 +39,7 @@ export default function Reports(){
     const carregar = async () => {
       try {
         const data = await getReports();
+        console.log("primeiro report:", data[0]) // ← aqui
         setReports(data);
       } catch (error) {
         console.error(error);
@@ -33,6 +48,8 @@ export default function Reports(){
 
     carregar();
   }, []);
+
+  
 
     const {register, handleSubmit, setValue, formState: { errors }} = useForm()
 
@@ -53,7 +70,15 @@ export default function Reports(){
     filtroGravidade === "Todos" || report.gravidade === filtroGravidade;
 
   return matchTipo && matchStatus && matchGravidade;
+
+
 });
+
+  const handleDeletar = (id) => {
+    dropReport(id, () => {
+        setReports(reports.filter((r) => r.id_denuncia !== id));
+    });
+};
 
     return(
         <div className={styles.container}>
@@ -70,8 +95,8 @@ export default function Reports(){
                     </div>
 
                     <div className={styles.report}>
-                        <button className={styles.buttonReport} onClick={gerarRelatorio} >
-                            🖨️ Exportar Relatório
+                        <button className={styles.buttonReport} onClick={handleRelatorio} disabled={gerando}>
+                            {gerando ? "⏳ Gerando..." : "🖨️ Exportar Relatório"}
                         </button>
                     </div>
                 </div>
@@ -135,7 +160,9 @@ export default function Reports(){
                 {reportsFiltrados.map((report) => (
                     <div className={styles.cardReports} key={report.id_denuncia}>
                         <img src={`data:image/jpeg;base64,${report.imagem}`} alt="Incêndio"/>
-                        <div className={styles.gravidade_stats}>
+                        <div className={styles.gravidadeStats}>
+
+                            <div className={styles.containerGravidadeStatus}>
                             <p className={`${styles.gravidadeReport} ${report.gravidade === "ALTA" ?
                                 styles.gravidadeReportAlto : styles.gravidadeReportMedio}`}>
                                     {report.gravidade === "ALTA" ? "Alta" : "Média"}</p>
@@ -151,7 +178,16 @@ export default function Reports(){
                                     : report.status === "EM_ANDAMENTO"
                                     ?  "Em andamento" 
                                     : "Resolvida"}</p>
+                            </div>
+
+                                <button className={styles.buttonDropReport} onClick={() => handleDeletar(report.id_denuncia)}>
+                                    <DeleteIcon sx={{ fontSize: 20 , color: '#616060'}}/>
+                                </button>
+
+        
                         </div>
+
+                        
                         <h3 className={styles.tipoReport}>
                             {report.tipoIncendio === "RESIDENCIAL"
                             ? "🏠 Residencial"
@@ -162,6 +198,10 @@ export default function Reports(){
                             : report.tipoIncendio === "URBANO"
                             ? "🏙️ Urbano":
                             "🌾 Rural"}</h3>
+
+                            
+                        
+
                         <p className={styles.descricaoReport}>{report.descricao}</p>
                         <p className={styles.location}><PlaceIcon sx={{ fontSize: 20 , color: '#000000'}}/> {report.latitude} {report.longitude}</p>
                         <p className={styles.date}><AccessTimeIcon sx={{ fontSize: 20 , color: '#000000'}}/>{report.dataRegistro}</p>

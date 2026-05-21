@@ -142,13 +142,32 @@
     border-radius: 30px 30px 0 0;
 }
 
-.gravidade_stats{
+.gravidadeStats {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.containerStatusDrop{
+    display: flex;
+    justify-items: center;
+}
+
+.containerGravidadeStatus {
+    display: flex;
+}
+
+.buttonDropReport{
+    padding: 5px;
+    cursor: pointer;
+    border: 0;
+    background-color: #fff;
+    
 }
 
 .gravidadeReport{
     padding: 3px 10px;
-    align-content: center;
     border-radius: 10px;
     width: max-content;
     font-size: 10px;
@@ -170,7 +189,6 @@
 
 .statusReport{
     padding: 3px 10px;
-    align-content: center;
     border-radius: 10px;
     width: max-content;
     font-size: 10px;
@@ -193,10 +211,13 @@
     background-color: #04801528;
 }
 
+
 .tipoReport{
     padding: 0 10px;
     font-size: 15px;
 }
+
+
 
 .descricaoReport{
     padding: 5px 10px;

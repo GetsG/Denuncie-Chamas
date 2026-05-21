@@ -34,6 +34,9 @@ export const gerarRelatorio = async () => {
         // Cria link
         const a = document.createElement("a");
 
+       
+
+
         a.href = url;
 
         a.download = "relatorio-denuncias.pdf";
